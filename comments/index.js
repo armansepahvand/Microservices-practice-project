@@ -31,7 +31,7 @@ app.post("/posts/:id/comments", (req, res) => {
   // save the creeated comments array inside commentsByPostId object
   commentsByPostId[req.params.id] = comments;
 
-  res.status(201).send(comments[id]);
+  res.status(201).send(commentsByPostId[req.params.id]);
 });
 
 app.listen(4001, () => {
