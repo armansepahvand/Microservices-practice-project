@@ -27,7 +27,7 @@ export default () => {
             onChange={(e) => setTilte(e.target.value)}
           />
         </div>
-        <butto className="btn btn-primary"> Submit</butto>
+        <button className="btn btn-primary"> Submit</button>
       </form>
     </div>
   );
