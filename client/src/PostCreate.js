@@ -8,7 +8,10 @@ export default ()=> {
       <form>
         <div className="form-group">
           <label>Title</label>
-          <input className="form-control" />
+          <input
+            className="form-control"
+            value={title}
+            onChange={(e) => setTilte(e.target.value)}
         </div>
         <butto className="btn btn-primary"> Submit</butto>
       </form>
