@@ -2,7 +2,11 @@ const express = require("express");
 
 const app = express();
 
-app.get("/posts", (req, res) => {});
+const posts = {};
+
+app.get("/posts", (req, res) => {
+  res.send(posts);
+});
 
 app.post("/post", (req, res) => {});
 
