@@ -1,20 +1,32 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-// eslint-disable-next-line
-export default ()=> {
+export default () => {
+  //state to keep track of the Title input
+  const [title, setTilte] = useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    await axios.post("http://localhost:4000/posts", {
+      title,
+    });
+    setTilte("");
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>Title</label>
           <input
             className="form-control"
             value={title}
             onChange={(e) => setTilte(e.target.value)}
+          />
         </div>
         <butto className="btn btn-primary"> Submit</butto>
       </form>
     </div>
   );
-}
+};
