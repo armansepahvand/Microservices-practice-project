@@ -10,7 +10,8 @@ const commentsByPostId = {};
 
 //get method to get the comments
 app.get("/posts/:id/comments", (req, res) => {
-  res.send(comments);
+  //send the commentsByPostId or an empty array if undefined
+  res.send(commentsByPostId[req.params.id] || []);
 });
 
 //post method to create comments
