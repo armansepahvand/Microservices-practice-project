@@ -12,18 +12,17 @@ app.get("/posts/:id/comments", (req, res) => {
 });
 
 app.post("/posts/:id/comments", (req, res) => {
-  const id = randomBytes(4).toString("hex");
+  const commentId = randomBytes(4).toString("hex");
 
-  const { title } = req.body;
+  const { content } = req.body;
+  const comments = commentsByPostId[req.params.id] || [];
+  comments.push({ id: commentId, content });
 
-  comments[id] = {
-    id,
-    title,
-  };
+  commentsByPostId[req.params.id] = comments;
 
   res.status(201).send(comments[id]);
 });
 
 app.listen(4001, () => {
-  console.log("listening on port 4000");
+  console.log("listening on port 4001");
 });
