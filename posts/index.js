@@ -1,4 +1,5 @@
 const express = require("express");
+const { randomBytes } = require("crypto");
 
 const app = express();
 
@@ -8,7 +9,9 @@ app.get("/posts", (req, res) => {
   res.send(posts);
 });
 
-app.post("/post", (req, res) => {});
+app.post("/post", (req, res) => {
+    const id= randomBytes(4).toString("hex");
+});
 
 app.listen(4000, () => {
   console.log("listening on port 4000");
