@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
-export default () => {
-  const [posts, setPosts] = useState({});
-
-  const fetchPost = async () => {
-    const res = await axios.get("http://localhost:4000/posts");
-
-    setPosts(res.data);
-  };
+export default ({ posts }) => {
+  const [postlist, setPostlist] = useState({});
 
   useEffect(() => {
-    fetchPost();
+    setPostlist(posts);
   }, [posts]);
 
   const renderedPosts = Object.values(posts).map((post) => {
