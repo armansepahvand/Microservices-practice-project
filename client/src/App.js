@@ -12,3 +12,7 @@ export default () => {
 
     return res.data;
   };
+
+  useEffect(async () => {
+    setPosts(await fetchPost());
+  }, []);
