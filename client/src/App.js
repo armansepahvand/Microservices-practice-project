@@ -16,3 +16,20 @@ export default () => {
   useEffect(async () => {
     setPosts(await fetchPost());
   }, []);
+
+  const onSubmit = async (title) => {
+    await axios.post("http://localhost:4000/posts", { title });
+    //set title to empty string to show empty input space after submitting
+    //setTilte("");
+    setPosts(await fetchPost());
+  };
+  return (
+    <div className="container">
+      <h1>Create Post</h1>
+      <PostCreate onSubmit={onSubmit} />
+      <hr />
+      <h1>Posts</h1>
+      <PostList posts={posts} />
+    </div>
+  );
+};
