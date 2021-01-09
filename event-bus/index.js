@@ -5,11 +5,12 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
+//events array to save all the recived events
 const events = [];
 
 app.post("/events", (req, res) => {
   const event = req.body;
-
+  //save the event to events array
   events.push(event);
 
   axios.post("http://localhost:4000/events", event);
@@ -20,6 +21,7 @@ app.post("/events", (req, res) => {
   res.send({ status: "OK" });
 });
 
+//get handler to pass events array to requesting services
 app.get("/events", (req, res) => {
   res.send(events);
 });
