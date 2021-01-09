@@ -34,6 +34,10 @@ const eventHandler = (type, data) => {
     comment.content = content;
   }
 };
+//get method to send al the posts
+app.get("/posts", (req, res) => {
+  res.send(posts);
+});
 
   res.send({});
 });
