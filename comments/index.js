@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { randomBytes } = require("crypto");
 const cors = require("cors");
+const axios = require("axios");
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,7 +18,7 @@ app.get("/posts/:id/comments", (req, res) => {
 });
 
 //post method to create comments
-app.post("/posts/:id/comments", (req, res) => {
+app.post("/posts/:id/comments", async (req, res) => {
   //create a randome id for each comment
   const commentId = randomBytes(4).toString("hex");
 
@@ -32,6 +33,16 @@ app.post("/posts/:id/comments", (req, res) => {
 
   // save the creeated comments array inside commentsByPostId object
   commentsByPostId[req.params.id] = comments;
+
+  //a post request to event bus to send the created comment to event-bus
+  await axios.post("http://localhost:4005/events", {
+    type: "CommentCreated",
+    data: {
+      id: commentId,
+      content,
+      postId: req.params.id,
+    },
+  });
 
   res.status(201).send(commentsByPostId[req.params.id]);
 });
