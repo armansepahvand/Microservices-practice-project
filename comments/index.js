@@ -48,8 +48,37 @@ app.post("/posts/:id/comments", async (req, res) => {
   res.status(201).send(commentsByPostId[req.params.id]);
 });
 
-app.post("/events", (req, res) => {
-  console.log("recieved event", req.body.type);
+app.post("/events", async (req, res) => {
+  //get the type and data from request body
+  const { type, data } = req.body;
+
+  //check if the data type is "CommentsModerated"
+  if (type === "CommentsModerated") {
+    //get the comment attributes from the request body data
+    const { id, postId, status, content } = data;
+
+    //save comments of the post with the postId sent in request body data
+    const comments = commentsByPostId[postId];
+
+    //irerate over comments and return the moderated comment
+    const comment = comments.find((comment) => {
+      return comment.id == id;
+    });
+
+    //update the status of the moderated comment
+    comment.status = status;
+
+    //send a post request to the event bus with the updated comment
+    await axios.post("http://localhost:4005/events", {
+      type: "CommentUpdated",
+      data: {
+        id,
+        status,
+        postId,
+        content,
+      },
+    });
+  }
 
   res.send({});
 });
