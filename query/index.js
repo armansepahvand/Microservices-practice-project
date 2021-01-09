@@ -10,6 +10,7 @@ app.use(cors());
 //post object to save the posts and their comments
 const posts = {};
 
+// a function to proccess events based on their type
 const eventHandler = (type, data) => {
   if (type === "PostCreated") {
     const { id, title } = data;
@@ -39,9 +40,9 @@ app.get("/posts", (req, res) => {
   res.send(posts);
 });
 
+//post method to recive the events and proccess them using eventHandler function
 app.post("/events", (req, res) => {
   const { type, data } = req.body;
-  console.log(type);
 
   eventHandler(type, data);
 
@@ -51,11 +52,11 @@ app.post("/events", (req, res) => {
 app.listen(4002, async () => {
   console.log("Listening on 4002");
 
+  //save all the existing events into res variable
   const res = await axios.get("http://localhost:4005/events");
-  console.log(res.data);
 
+  //loop over all the existing events and proccess them using eventHandler function
   for (let event of res.data) {
-    console.log("proccessing event: ", event);
     eventHandler(event.type, event.data);
   }
 });
